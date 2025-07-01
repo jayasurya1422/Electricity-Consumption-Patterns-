@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard - Web Integration</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+    }
+
+    .navbar {
+      background-color: #333;
+      display: flex;
+      align-items: center;
+      padding: 14px 20px;
+    }
+
+    .navbar a {
+      color: white;
+      text-decoration: none;
+      padding: 0 14px;
+      cursor: pointer;
+    }
+
+    .navbar a:last-child {
+      margin-left: auto;
+    }
+
+    .content {
+      height: calc(100% - 52px); /* Full height minus navbar */
+      width: 100%;
+    }
+
+    .tab {
+      display: none;
+      width: 100%;
+      height: 100%;
+    }
+
+    .tab.active {
+      display: block;
+    }
+
+    .tableauPlaceholder,
+    .tableauViz {
+      width: 100% !important;
+      height: 100% !important;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="navbar">
+    <a onclick="showTab('story')">Story</a>
+    <a onclick="showTab('dashboard')">Dashboard</a>
+    <a href="#">Internship</a>
+    <a href="#">Support</a>
+    <a href="#">Guided Project</a>
+    <a href="#">Project Workspace</a>
+    <a href="#">Maximize Screen</a>
+  </div>
+
+  <div class="content">
+    <div id="story" class="tab active">
+      <div class='tableauPlaceholder' id='storyViz'>
+        <object class='tableauViz'>
+          <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
+          <param name='embed_code_version' value='3' />
+          <param name='site_root' value='' />
+          <param name='name' value='Story_17508554393490/StoryonElectricityConsumptioninIndia' />
+          <param name='tabs' value='no' />
+          <param name='toolbar' value='yes' />
+          <param name='animate_transition' value='yes' />
+          <param name='display_static_image' value='yes' />
+          <param name='display_spinner' value='yes' />
+          <param name='display_overlay' value='yes' />
+          <param name='display_count' value='yes' />
+          <param name='language' value='en-US' />
+          <param name='filter' value='publish=yes' />
+        </object>
+      </div>
+    </div>
+
+    <div id="dashboard" class="tab">
+      <!-- Will be dynamically loaded -->
+    </div>
+  </div>
+
+  <script src="https://public.tableau.com/javascripts/api/viz_v1.js"></script>
+
+  <script>
+    function showTab(tabId) {
+      // Hide all tabs
+      document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+
+      // Show selected tab
+      document.getElementById(tabId).classList.add('active');
+
+      // Load dashboard only once
+      if (tabId === 'dashboard' && !document.getElementById('dashboardViz')) {
+        const container = document.getElementById('dashboard');
+        container.innerHTML = `
+          <div class='tableauPlaceholder' id='dashboardViz'>
+            <object class='tableauViz'>
+              <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
+              <param name='embed_code_version' value='3' />
+              <param name='site_root' value='' />
+              <param name='name' value='AnExplorationofElectricityConsumptionPatterns/Dashboard1' />
+              <param name='tabs' value='no' />
+              <param name='toolbar' value='yes' />
+              <param name='animate_transition' value='yes' />
+              <param name='display_static_image' value='yes' />
+              <param name='display_spinner' value='yes' />
+              <param name='display_overlay' value='yes' />
+              <param name='display_count' value='yes' />
+              <param name='language' value='en-US' />
+              <param name='filter' value='publish=yes' />
+            </object>
+          </div>
+        `;
+
+        // Re-run Tableau API script to initialize embed
+        const script = document.createElement('script');
+        script.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';
+        document.body.appendChild(script);
+      }
+    }
+  </script>
+
+</body>
+</html>
